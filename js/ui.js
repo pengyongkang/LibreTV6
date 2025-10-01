@@ -1,22 +1,5 @@
 // UI相关函数
 function toggleSettings(e) {
-    // 强化的密码保护校验 - 防止绕过
-    try {
-        if (window.ensurePasswordProtection) {
-            window.ensurePasswordProtection();
-        } else {
-            // 兼容性检查
-            if (window.isPasswordProtected && window.isPasswordVerified) {
-                if (window.isPasswordProtected() && !window.isPasswordVerified()) {
-                    showPasswordModal && showPasswordModal();
-                    return;
-                }
-            }
-        }
-    } catch (error) {
-        console.warn('Password protection check failed:', error.message);
-        return;
-    }
     // 阻止事件冒泡，防止触发document的点击事件
     e && e.stopPropagation();
     const panel = document.getElementById('settingsPanel');
@@ -288,13 +271,6 @@ function deleteSingleSearchHistory(query) {
 
 // 增加清除搜索历史功能
 function clearSearchHistory() {
-    // 密码保护校验
-    if (window.isPasswordProtected && window.isPasswordVerified) {
-        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
-            showPasswordModal && showPasswordModal();
-            return;
-        }
-    }
     try {
         localStorage.removeItem(SEARCH_HISTORY_KEY);
         renderSearchHistory();
@@ -307,13 +283,6 @@ function clearSearchHistory() {
 
 // 历史面板相关函数
 function toggleHistory(e) {
-    // 密码保护校验
-    if (window.isPasswordProtected && window.isPasswordVerified) {
-        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
-            showPasswordModal && showPasswordModal();
-            return;
-        }
-    }
     if (e) e.stopPropagation();
 
     const panel = document.getElementById('historyPanel');
@@ -633,6 +602,7 @@ async function playFromHistory(url, title, episodeIndex, playbackPosition = 0) {
         const sourceNameForUrl = historyItem ? historyItem.sourceName : (new URLSearchParams(new URL(url, window.location.origin).search)).get('source');
         const sourceCodeForUrl = historyItem ? historyItem.sourceCode || historyItem.sourceName : (new URLSearchParams(new URL(url, window.location.origin).search)).get('source_code');
         const idForUrl = historyItem ? historyItem.vod_id : '';
+        const doubanId = historyItem ? (historyItem.douban_id || '') : '';
 
 
         if (url.includes('player.html') || url.includes('watch.html')) {
@@ -646,6 +616,7 @@ async function playFromHistory(url, title, episodeIndex, playbackPosition = 0) {
                 if (sourceNameForUrl) playerUrl += `&source=${encodeURIComponent(sourceNameForUrl)}`;
                 if (sourceCodeForUrl) playerUrl += `&source_code=${encodeURIComponent(sourceCodeForUrl)}`;
                 if (idForUrl) playerUrl += `&id=${encodeURIComponent(idForUrl)}`;
+                if (doubanId) playerUrl += `&douban_id=${encodeURIComponent(doubanId)}`;
 
 
             } catch (e) {
@@ -654,6 +625,7 @@ async function playFromHistory(url, title, episodeIndex, playbackPosition = 0) {
                 if (sourceNameForUrl) playerUrl += `&source=${encodeURIComponent(sourceNameForUrl)}`;
                 if (sourceCodeForUrl) playerUrl += `&source_code=${encodeURIComponent(sourceCodeForUrl)}`;
                 if (idForUrl) playerUrl += `&id=${encodeURIComponent(idForUrl)}`;
+                if (doubanId) playerUrl += `&douban_id=${encodeURIComponent(doubanId)}`;
             }
         } else {
              // This case should ideally not happen if 'url' is always a player.html link from history
@@ -667,6 +639,7 @@ async function playFromHistory(url, title, episodeIndex, playbackPosition = 0) {
             if (sourceNameForUrl) playUrl.searchParams.set('source', sourceNameForUrl);
             if (sourceCodeForUrl) playUrl.searchParams.set('source_code', sourceCodeForUrl);
             if (idForUrl) playUrl.searchParams.set('id', idForUrl);
+            if (doubanId) playUrl.searchParams.set('douban_id', doubanId);
             playerUrl = playUrl.toString();
         }
 
@@ -682,13 +655,6 @@ async function playFromHistory(url, title, episodeIndex, playbackPosition = 0) {
 // IMPORTANT: videoInfo passed to this function should include a 'showIdentifier' property
 // (ideally `${sourceName}_${vod_id}`), 'sourceName', and 'vod_id'.
 function addToViewingHistory(videoInfo) {
-    // 密码保护校验
-    if (window.isPasswordProtected && window.isPasswordVerified) {
-        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
-            showPasswordModal && showPasswordModal();
-            return;
-        }
-    }
     try {
         const history = getViewingHistory();
 
@@ -721,6 +687,7 @@ function addToViewingHistory(videoInfo) {
             existingItem.url = videoInfo.url || existingItem.url;
             existingItem.playbackPosition = videoInfo.playbackPosition > 10 ? videoInfo.playbackPosition : (existingItem.playbackPosition || 0);
             existingItem.duration = videoInfo.duration || existingItem.duration;
+            existingItem.douban_id = videoInfo.douban_id || existingItem.douban_id || '';
 
             if (videoInfo.episodes && Array.isArray(videoInfo.episodes) && videoInfo.episodes.length > 0) {
                 if (!existingItem.episodes ||

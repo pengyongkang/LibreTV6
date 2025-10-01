@@ -27,7 +27,7 @@ LibreTV 是一个轻量级、免费的在线视频搜索与观看平台，提供
 
 ## 🚨 重要声明
 
-- 本项目仅供学习和个人使用，为避免版权纠纷，必须设置PASSWORD环境变量
+- 本项目仅供学习和个人使用
 - 请勿将部署的实例用于商业用途或公开服务
 - 如因公开分享导致的任何法律问题，用户需自行承担责任
 - 项目开发者不对用户的使用行为承担任何法律责任
@@ -55,16 +55,14 @@ Pull Bot 会反复触发无效的 PR 和垃圾邮件，严重干扰项目维护�
 4. 使用以下设置：
    - 构建命令：留空（无需构建）
    - 输出目录：留空（默认为根目录）
-5. **⚠️ 重要：在"设置" > "环境变量"中添加 `PASSWORD` 变量（必须设置）**
-6. 点击"保存并部署"
+5. 点击"保存并部署"
 
 ### Vercel
 
 1. Fork 或克隆本仓库到您的 GitHub/GitLab 账户
 2. 登录 [Vercel](https://vercel.com/)，点击"New Project"
 3. 导入您的仓库，使用默认设置
-4. **⚠️ 重要：在"Settings" > "Environment Variables"中添加 `PASSWORD` 变量（必须设置）**
-5. 点击"Deploy"
+4. 点击"Deploy"
 
 
 ### Docker
@@ -73,7 +71,6 @@ docker run -d \
   --name libretv \
   --restart unless-stopped \
   -p 8899:8080 \
-  -e PASSWORD=your_password \
   bestzwei/libretv:latest
 ```
 
@@ -88,8 +85,6 @@ services:
     container_name: libretv
     ports:
       - "8899:8080" # 将内部 8080 端口映射到主机的 8899 端口
-    environment:
-      - PASSWORD=${PASSWORD:-111111} # 可将 111111 修改为你想要的密码，默认为 your_password
     restart: unless-stopped
 ```
 启动 LibreTV：
@@ -119,11 +114,6 @@ npm run dev
 > ⚠️ 注意：使用简单静态服务器（如 `python -m http.server` 或 `npx http-server`）时，视频代理功能将不可用，视频无法正常播放。完整功能测试请使用 Node.js 开发服务器。
 
 ## 🔧 自定义配置
-
-### 密码保护
-
-**重要提示**: 为确保安全，所有部署都必须设置 PASSWORD 环境变量，否则用户将看到设置密码的提示。
-
 
 ### API兼容性
 
