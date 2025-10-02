@@ -1258,7 +1258,8 @@ function closeVideoPlayer(home = false) {
       detailModal.classList.add("hidden");
     }
     // 如果启用豆瓣区域则显示豆瓣区域
-    if (localStorage.getItem("doubanEnabled") === "true") {
+    const storedDoubanEnabled = localStorage.getItem("doubanEnabled");
+    if (storedDoubanEnabled === null || storedDoubanEnabled === "true") {
       document.getElementById("doubanArea").classList.remove("hidden");
     }
   }
