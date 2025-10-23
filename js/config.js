@@ -5,7 +5,7 @@ const MAX_HISTORY_ITEMS = 5;
 
 // 网站信息配置
 const SITE_CONFIG = {
-  name: "LibreTV",
+  name: "彭友TV",
   url: "https://github.com/SeqCrafter/LibreTV",
   description: "免费在线视频搜索与观看平台",
   logo: "image/logo.png",
@@ -15,6 +15,11 @@ const SITE_CONFIG = {
 // API站点配置
 const API_SITES = {
   innerSource: {
+    api: "http://caiji.dyttzyapi.com/api.php/provide/vod",
+    name: "电影天堂",
+    adult: false,
+  },
+  heimuer: {
         api: 'https://json.heimuer.xyz',
         name: '黑木耳',
         detail: 'https://heimuer.tv',
@@ -115,7 +120,7 @@ const API_SITES = {
         api: 'https://yutuzy10.com',
         name: '玉兔资源',
         adult: true
-  },
+    },
 };
 
 // 定义合并方法
