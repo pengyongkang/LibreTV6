@@ -20,11 +20,10 @@ const API_SITES = {
     adult: false,
   },
   heimuer: {
-        api: 'https://json.heimuer.xyz',
-        name: '黑木耳',
-        detail: 'https://heimuer.tv',
-        filterAdRule: '#EXT-X-DISCONTINUITY\\n#EXTINF:\\d+\\.\\d+,\\n.*?\\n#EXT-X-DISCONTINUITY'
-    },
+    api: 'https://json.heimuer.xyz',
+    name: '黑木耳',
+    adult: false, 
+  },
     ffzy: {
         api: 'http://ffzy5.tv',
         name: '非凡影视',
