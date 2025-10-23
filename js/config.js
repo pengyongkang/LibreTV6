@@ -19,21 +19,12 @@ const API_SITES = {
     name: "电影天堂",
     adult: false,
   },
-    huangcang: {
-        api: 'https://hsckzy.vip',
-        name: '黄色仓库',
-        adult: true,
-        detail: 'https://hsckzy.vip'
+
+    heimuer: {
+        api: 'https://json.heimuer.xyz',
+        name: '黑木耳',
+        adult: false,
     },
-    zuid: {
-        api: 'https://api.zuidapi.com',
-        name: '最大资源'
-    },
-    yutu: {
-        api: 'https://yutuzy10.com',
-        name: '玉兔资源',
-        adult: true
-  },
 };
 
 // 定义合并方法
