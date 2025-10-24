@@ -5,7 +5,7 @@ const MAX_HISTORY_ITEMS = 5;
 
 // 网站信息配置
 const SITE_CONFIG = {
-  name: "LibreTV",
+  name: "彭友TV",
   url: "https://github.com/SeqCrafter/LibreTV",
   description: "免费在线视频搜索与观看平台",
   logo: "image/logo.png",
